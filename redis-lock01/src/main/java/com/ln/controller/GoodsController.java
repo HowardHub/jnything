@@ -26,20 +26,22 @@ public class GoodsController {
 
 
     @GetMapping("/buyGoods")
-    public String buyGoods(){
+    public String buyGoods() {
 
-        String result = redisTemplate.opsForValue().get("goods:001");// get(key) ==> 看看库存够不够
-        int goodsNumber = result == null ? 0 : Integer.parseInt(result);
+        synchronized (this) {
+            String result = redisTemplate.opsForValue().get("goods:001");// get(key) ==> 看看库存够不够
+            int goodsNumber = result == null ? 0 : Integer.parseInt(result);
 
-        if (goodsNumber > 0) {
-            int realNumber = goodsNumber - 1;
-            redisTemplate.opsForValue().set("goods:001", String.valueOf(realNumber));
-            log.info(String.format("从【%s端口】成功买到一个商品，库存还剩下%d件", serverPort, realNumber));
-            return String.format("从【%s端口】成功买到一个商品，库存还剩下%d件", serverPort, realNumber);
-        } else {
-            return "商品已经售完.......+ 服务提供端口：" + serverPort;
+            if (goodsNumber > 0) {
+                int realNumber = goodsNumber - 1;
+                redisTemplate.opsForValue().set("goods:001", String.valueOf(realNumber));
+                log.info(String.format("从【%s端口】成功买到一个商品，库存还剩下%d件", serverPort, realNumber));
+                return String.format("从【%s端口】成功买到一个商品，库存还剩下%d件", serverPort, realNumber);
+            } else {
+                return "商品已经售完.......+ 服务提供端口：" + serverPort;
+            }
+
         }
-
     }
 
 
