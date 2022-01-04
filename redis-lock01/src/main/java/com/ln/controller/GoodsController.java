@@ -56,7 +56,12 @@ public class GoodsController {
                 return "商品已经售完.......+ 服务提供端口：" + serverPort;
             }
         } finally {
-            redissonLock.unlock();
+            if (redissonLock.isLocked()) {
+                if (redissonLock.isHeldByCurrentThread()) {
+                    redissonLock.unlock();
+                }
+            }
+
         }
 
     }
