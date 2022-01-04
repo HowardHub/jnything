@@ -2,6 +2,9 @@ package com.ln.controller;
 
 import com.ln.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.Redisson;
+import org.redisson.RedissonLock;
+import org.redisson.api.RLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -33,16 +36,15 @@ public class GoodsController {
 
     private static final String REDIS_LOCK = "mylock";
 
+    @Autowired
+    private Redisson redisson;
 
     @GetMapping("/buyGoods")
     public String buyGoods() throws Exception {
         String value = UUID.randomUUID().toString() + Thread.currentThread().getName();
-
+        RLock redissonLock = redisson.getLock(REDIS_LOCK);
+        redissonLock.lock();
         try {
-            Boolean flag = redisTemplate.opsForValue().setIfAbsent(REDIS_LOCK, value, 10L, TimeUnit.SECONDS);// 等价于SETNX
-            if (!flag) {
-                return "抢锁失败";
-            }
             String result = redisTemplate.opsForValue().get("goods:001");// get(key) ==> 看看库存够不够
             int goodsNumber = result == null ? 0 : Integer.parseInt(result);
             if (goodsNumber > 0) {
@@ -54,25 +56,7 @@ public class GoodsController {
                 return "商品已经售完.......+ 服务提供端口：" + serverPort;
             }
         } finally {
-            Jedis jedis = RedisUtils.getJedis();
-            String script = "if redis.call(\"get\",KEYS[1]) == ARGV[1]\n" +
-                    "then\n" +
-                    "    return redis.call(\"del\",KEYS[1])\n" +
-                    "else\n" +
-                    "    return 0\n" +
-                    "end";
-            try{
-                Object res = jedis.eval(script, Collections.singletonList(REDIS_LOCK), Collections.singletonList(value));
-                if ("1".equals(res.toString())) {
-                    log.info("---------解锁成功");
-                } else {
-                    log.info("---------解锁失败");
-                }
-            }finally {
-                if (jedis != null) {
-                    jedis.close();
-                }
-            }
+            redissonLock.unlock();
         }
 
     }
