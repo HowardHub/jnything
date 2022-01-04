@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description
@@ -35,6 +36,7 @@ public class GoodsController {
 
         try {
             Boolean flag = redisTemplate.opsForValue().setIfAbsent(REDIS_LOCK, value);// 等价于SETNX
+            redisTemplate.expire(REDIS_LOCK, 10L, TimeUnit.SECONDS);
             if (!flag) {
                 return "抢锁失败";
             }

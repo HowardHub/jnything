@@ -35,6 +35,7 @@ public class GoodsController {
 
         try {
             Boolean flag = redisTemplate.opsForValue().setIfAbsent(REDIS_LOCK, value);// 等价于SETNX
+            redisTemplate.expire(REDIS_LOCK, 10L, TimeUnit.SECONDS);
             if (!flag) {
                 return "抢锁失败";
             }
