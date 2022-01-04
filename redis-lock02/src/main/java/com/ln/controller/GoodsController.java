@@ -50,7 +50,10 @@ public class GoodsController {
                 return "商品已经售完.......+ 服务提供端口：" + serverPort;
             }
         } finally {
-            redisTemplate.delete(REDIS_LOCK); // 释放锁
+            if (redisTemplate.opsForValue().get(REDIS_LOCK).equalsIgnoreCase(value)) { // 自己只能删自己加的锁
+                redisTemplate.delete(REDIS_LOCK); // 释放锁
+            }
+
         }
 
     }
