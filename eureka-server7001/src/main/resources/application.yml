@@ -1,0 +1,18 @@
+server:
+  port: 7001
+
+eureka:
+  instance:
+    # 修改win10 host文件
+    hostname: eureka7001.com
+
+  client:
+    # 自己是服务端，所以不向自己注册
+    register-with-eureka: false
+    # 自己是服务端，不需要检索服务
+    fetch-registry: false
+    service-url:
+      # 集群版
+      # defaultZone: http://eureka7002.com:7002/eureka/
+      # 单机版
+      defaultZone: http://eureka7001.com:7001/eureka/
