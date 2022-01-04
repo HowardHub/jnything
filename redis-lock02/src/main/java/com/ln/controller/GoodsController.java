@@ -1,13 +1,15 @@
 package com.ln.controller;
 
+import com.ln.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import redis.clients.jedis.Jedis;
 
-import java.util.List;
+import java.util.Collections;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -32,7 +34,7 @@ public class GoodsController {
 
 
     @GetMapping("/buyGoods")
-    public String buyGoods() {
+    public String buyGoods() throws Exception {
         String value = UUID.randomUUID().toString() + Thread.currentThread().getName();
 
         try {
@@ -51,26 +53,30 @@ public class GoodsController {
                 return "商品已经售完.......+ 服务提供端口：" + serverPort;
             }
         } finally {
-            while (true) {
-                redisTemplate.watch(REDIS_LOCK);
-                if (redisTemplate.opsForValue().get(REDIS_LOCK).equalsIgnoreCase(value)) {
-                    redisTemplate.setEnableTransactionSupport(true); // 开启事务支持
-                    redisTemplate.multi();//开启事务
-                    redisTemplate.delete(REDIS_LOCK);//删除自己的锁
-                    List<Object> list = redisTemplate.exec();//提交事务
-                    if (list == null) {
-                        continue; // 删除失败，继续
-                    }
+            Jedis jedis = RedisUtils.getJedis();
+            String script = "if redis.call(\"get\",KEYS[1]) == ARGV[1]\n" +
+                    "then\n" +
+                    "    return redis.call(\"del\",KEYS[1])\n" +
+                    "else\n" +
+                    "    return 0\n" +
+                    "end";
+            try {
+                Object res = jedis.eval(script, Collections.singletonList(REDIS_LOCK), Collections.singletonList(value));
+                if ("1".equals(res.toString())) {
+                    log.info("---------解锁成功");
+                } else {
+                    log.info("---------解锁失败");
                 }
-                redisTemplate.unwatch();
-                break; //删除成功，跳出循环
+            } finally {
+                if (jedis != null) {
+                    jedis.close();
+                }
             }
+
 
         }
 
     }
-
-
 
 
 }
