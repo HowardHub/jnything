@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -50,8 +51,19 @@ public class GoodsController {
                 return "商品已经售完.......+ 服务提供端口：" + serverPort;
             }
         } finally {
-            if (redisTemplate.opsForValue().get(REDIS_LOCK).equalsIgnoreCase(value)) { // 自己只能删自己加的锁
-                redisTemplate.delete(REDIS_LOCK); // 释放锁
+            while (true) {
+                redisTemplate.watch(REDIS_LOCK);
+                if (redisTemplate.opsForValue().get(REDIS_LOCK).equalsIgnoreCase(value)) {
+                    redisTemplate.setEnableTransactionSupport(true); // 开启事务支持
+                    redisTemplate.multi();//开启事务
+                    redisTemplate.delete(REDIS_LOCK);//删除自己的锁
+                    List<Object> list = redisTemplate.exec();//提交事务
+                    if (list == null) {
+                        continue; // 删除失败，继续
+                    }
+                }
+                redisTemplate.unwatch();
+                break; //删除成功，跳出循环
             }
 
         }
