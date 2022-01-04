@@ -35,8 +35,7 @@ public class GoodsController {
         String value = UUID.randomUUID().toString() + Thread.currentThread().getName();
 
         try {
-            Boolean flag = redisTemplate.opsForValue().setIfAbsent(REDIS_LOCK, value);// 等价于SETNX
-            redisTemplate.expire(REDIS_LOCK, 10L, TimeUnit.SECONDS);
+            Boolean flag = redisTemplate.opsForValue().setIfAbsent(REDIS_LOCK, value, 10L, TimeUnit.SECONDS);// 等价于SETNX
             if (!flag) {
                 return "抢锁失败";
             }
