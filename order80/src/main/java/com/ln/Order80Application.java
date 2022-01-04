@@ -7,15 +7,15 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 /**
  * @Description
  * @Author HeZhipeng
- * @Date 2022/1/3 22:35
+ * @Date 2022/1/4 23:15
  **/
 @SpringBootApplication
 @EnableEurekaClient
-public class RedisLock01Application {
+public class Order80Application {
 
 
     public static void main(String[] args) {
-        SpringApplication.run(RedisLock01Application.class, args);
+        SpringApplication.run(Order80Application.class, args);
     }
 
 }

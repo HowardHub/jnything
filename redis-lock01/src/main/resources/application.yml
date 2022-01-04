@@ -1,6 +1,8 @@
 server:
   port: 1111
 spring:
+  application:
+    name: redis-lock
   redis:
     database: 0
     host: 1.15.72.181
@@ -12,3 +14,13 @@ spring:
         min-idle: 0
     password: '6623'
     port: 6379
+
+eureka:
+  instance:
+    instance-id: redis-lock01
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/
