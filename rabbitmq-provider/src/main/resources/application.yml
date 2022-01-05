@@ -1,0 +1,18 @@
+server:
+  port: 8899
+spring:
+  application:
+    name: rabbitmq-provider
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: partitioned.destination
+          producer:
+            partitioned: true
+            partition-key-expression: headers['partitionKey']
+            partition-count: 2
+            required-groups:
+              - myGroup
+
+

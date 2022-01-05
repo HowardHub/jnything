@@ -8,6 +8,8 @@
         <module>redis-lock02</module>
         <module>eureka-server7001</module>
         <module>order80</module>
+        <module>rabbitmq-provider</module>
+        <module>rabbitmq-consumer</module>
     </modules>
 
     <parent>
