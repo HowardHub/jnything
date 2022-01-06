@@ -1,8 +1,8 @@
 server:
-  port: 8899
+  port: 9999
 spring:
   application:
-    name: rabbitmq-provider
+    name: rabbitmq-consumer
   rabbitmq:
     host: 1.15.72.181
     port: 5672

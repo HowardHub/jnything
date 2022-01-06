@@ -1,9 +1,9 @@
 package com.ln;
 
+import com.ln.service.IMessageProviderService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.messaging.Source;
 
 /**
  * @Description
@@ -11,11 +11,11 @@ import org.springframework.cloud.stream.messaging.Source;
  * @Date 2022/1/6 1:11
  **/
 @SpringBootApplication
-@EnableBinding(Source.class)
-public class RabbitMQProvider8899 {
+@EnableBinding(value={IMessageProviderService.class})
+public class RabbitMQProvider8899Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(RabbitMQProvider8899.class, args);
+        SpringApplication.run(RabbitMQProvider8899Application.class, args);
     }
 
 }
