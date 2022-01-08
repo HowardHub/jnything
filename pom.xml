@@ -10,6 +10,8 @@
         <module>order80</module>
         <module>rabbitmq-provider</module>
         <module>rabbitmq-consumer</module>
+        <module>kafka-provider</module>
+        <module>kafka-consumer</module>
     </modules>
 
     <parent>

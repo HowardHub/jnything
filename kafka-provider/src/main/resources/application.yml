@@ -1,0 +1,15 @@
+server:
+  port: 7777
+spring:
+  application:
+    name: kafka-provider
+  cloud:
+    stream:
+      bindings:
+        oooooooo:
+          content-type: application/json
+          destination: topic-test
+      kafka:
+        binder:
+          brokers: 192.168.11.199:9092
+          zkNodes: 192.168.11.199:2181
