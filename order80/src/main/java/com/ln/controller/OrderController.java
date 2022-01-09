@@ -35,7 +35,12 @@ public class OrderController {
     }
 
 
-
+    /**
+     * 浏览器输入
+     * http://localhost:6611/order/gatewayTest
+     * 被gateway转到这个地址
+     * @return
+     */
     @GetMapping("/gatewayTest")
     public String gatewayTest(){
         String result = "请求被gateway6611转发到order80啦"  + UUID.randomUUID();
