@@ -12,6 +12,7 @@
         <module>rabbitmq-consumer</module>
         <module>kafka-provider</module>
         <module>kafka-consumer</module>
+        <module>gateway-6611</module>
     </modules>
 
     <parent>

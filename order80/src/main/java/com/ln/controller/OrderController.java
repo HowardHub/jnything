@@ -3,8 +3,11 @@ package com.ln.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.UUID;
 
 /**
  * @Description 超卖压测入口
@@ -13,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
  **/
 @RestController
 @Slf4j
+@RequestMapping("order")
 public class OrderController {
 
 
@@ -32,5 +36,11 @@ public class OrderController {
 
 
 
+    @GetMapping("/gatewayTest")
+    public String gatewayTest(){
+        String result = "请求被gateway6611转发到order80啦"  + UUID.randomUUID();
+        log.info("result==" + result);
+        return result;
+    }
 
 }
