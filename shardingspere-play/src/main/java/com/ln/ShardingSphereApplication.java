@@ -38,9 +38,8 @@ public class ShardingSphereApplication {
         public Object add(){
 
             UserModel model = new UserModel();
-            //model.setId(2);
             model.setName("test2");
-            model.setAge(1);
+            model.setAge(2);
             userMapper.insert(model);
             return "ok";
         }
