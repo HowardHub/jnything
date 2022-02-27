@@ -1,0 +1,16 @@
+server:
+  port: 7788
+spring:
+  application:
+    name: auth-service
+  redis:
+    database: 0
+    host: 124.223.54.117
+    port: 6379
+    password: 6623
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/    # Eureka Server的地址
