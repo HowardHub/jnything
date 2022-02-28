@@ -32,8 +32,8 @@ spring:
           predicates:
             - Path=/order/**
         # user_center转发配置
-        - id: user_center
-          uri: lb://user_center #lb表示启用负载均衡功能，然后后面跟着微服务名称
+        - id: user-center
+          uri: lb://user-center #lb表示启用负载均衡功能，然后后面跟着微服务名称
           predicates:
             - Path=/user/**
         # auth-service鉴权授权

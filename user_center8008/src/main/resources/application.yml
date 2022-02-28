@@ -1,0 +1,35 @@
+server:
+  port: 8008
+
+spring:
+  application:
+    # 服务名严禁使用下划线分割，否则会导致eureka解析失败，导致网关转发出错。！！！
+    name: user-center
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://124.223.54.117:3306/user_center
+    username: hzp
+    password: 6623.*aA
+
+eureka:
+  instance:
+    instance-id: user-center
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/
+
+
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:/mapping/**.xml

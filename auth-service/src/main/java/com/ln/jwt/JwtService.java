@@ -22,7 +22,7 @@ public class JwtService {
 
     private static final String ISSUE = "ln";
 
-    private static final Long TOKEN_EXPIRES = 1 * 24 * 60 * 60L;
+    private static final Long TOKEN_EXPIRES = 1 * 24 * 60 * 60 * 1000L;
 
     /**
      * 获得 token
