@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,12 +21,13 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * @Description auth过滤器
+ * 使用GlobalFilter就不需要使用GatewayConfig，并且可以根据yml配置实现自动转发的功能
  * @Author HeZhipeng
  * @Date 2022/2/27 16:29
  **/
 @Component
 @Slf4j
-public class AuthFilter implements GatewayFilter, Ordered {
+public class AuthFilter implements GlobalFilter, Ordered {
 
 
     private static final String AUTH = "Authorization";

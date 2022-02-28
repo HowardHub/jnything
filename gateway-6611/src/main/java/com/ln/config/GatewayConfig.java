@@ -18,24 +18,24 @@ import org.springframework.http.HttpMethod;
 public class GatewayConfig {
 
 
-    // 配置鉴权过滤器：将AuthFilter注册到router中
-    @Bean
-    @Order
-    public RouteLocator myRoutes(RouteLocatorBuilder builder, AuthFilter authFilter) {
-
-
-        return builder.routes()
-                .route(r ->
-                        // 以/saas/**过来的请求，都要经过AuthFilter的验证。
-                        r.path("/saas/**")
-                        .and()
-                        .method(HttpMethod.POST,HttpMethod.GET)
-                        .filters(f -> f.stripPrefix(1) // 去除/saas/前缀
-                                .filter(authFilter)
-                        )
-                        // 验证通过后需要跳转到哪个服务。。
-                        .uri("lb://user-center"))
-                .build();
-    }
+//    // 配置鉴权过滤器：将AuthFilter注册到router中
+//    @Bean
+//    @Order
+//    public RouteLocator myRoutes(RouteLocatorBuilder builder, AuthFilter authFilter) {
+//
+//
+//        return builder.routes()
+//                .route(r ->
+//                        // 以/saas/**过来的请求，都要经过AuthFilter的验证。
+//                        r.path("/saas/**")
+//                        .and()
+//                        .method(HttpMethod.POST,HttpMethod.GET,HttpMethod.OPTIONS,HttpMethod.PUT)
+//                        .filters(f -> f.stripPrefix(1) // 去除/saas/前缀
+//                                .filter(authFilter)
+//                        )
+//                        // 验证通过后需要跳转到哪个服务。。
+//                        .uri("lb://user-center"))
+//                .build();
+//    }
 
 }
