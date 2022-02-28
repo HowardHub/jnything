@@ -35,7 +35,7 @@ spring:
         - id: user-center
           uri: lb://user-center #lb表示启用负载均衡功能，然后后面跟着微服务名称
           predicates:
-            - Path=/user/**
+            - Path=/saas/uc/**
         # auth-service鉴权授权
         - id: auth-service
           uri: lb://auth-service #lb表示启用负载均衡功能，然后后面跟着微服务名称
