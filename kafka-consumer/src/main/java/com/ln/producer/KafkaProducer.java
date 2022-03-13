@@ -15,6 +15,7 @@ import java.util.UUID;
  */
 @RestController
 public class KafkaProducer {
+
     private final static String TOPIC_NAME = "topic1"; //topic的名称
 
     @Autowired
@@ -23,6 +24,6 @@ public class KafkaProducer {
     @RequestMapping("/send")
     public void send() {
         //发送功能就一行代码~
-        kafkaTemplate.send(TOPIC_NAME,  "key", "test message send~" + UUID.randomUUID());
+        kafkaTemplate.send(TOPIC_NAME, "key", "test message send~" + UUID.randomUUID());
     }
 }

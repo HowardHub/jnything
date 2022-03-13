@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class KafkaConsumer {
 
-    //kafka的监听器，topic为"zhTest"，消费者组为"zhTestGroup"
+    //kafka的监听器，topic为"topic1"，消费者组为"zhTestGroup"
     @KafkaListener(topics = "topic1", groupId = "zhTestGroup")
     public void listenZhugeGroup(ConsumerRecord<String, String> record, Acknowledgment ack) {
         String value = record.value();
@@ -25,7 +25,7 @@ public class KafkaConsumer {
     }
 
     /*//配置多个消费组
-    @KafkaListener(topics = "zhTest",groupId = "zhTestGroup2")
+    @KafkaListener(topics = "topic1",groupId = "zhTestGroup2")
     public void listenTulingGroup(ConsumerRecord<String, String> record, Acknowledgment ack) {
         String value = record.value();
         System.out.println(value);
