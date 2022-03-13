@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: kafka
+    name: kafka-play
   kafka:
     bootstrap-servers: 124.223.54.117:9092 # kafka集群信息
     producer: # 生产者配置
