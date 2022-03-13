@@ -43,7 +43,7 @@ public class OrderController {
      */
     @GetMapping("/gatewayTest")
     public String gatewayTest(){
-        String result = "请求被gateway6611转发到order80啦"  + UUID.randomUUID();
+        String result = "请求被gateway6611转发到order80~~~"  + UUID.randomUUID();
         log.info("result==" + result);
         return result;
     }

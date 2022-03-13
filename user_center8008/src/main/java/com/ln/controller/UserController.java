@@ -34,7 +34,7 @@ public class UserController{
     @ApiOperation("根据名字查询用户")
     @PostMapping("/listByName")
     private List<UserVo> listByName(@RequestBody UserQueryVo queryVo){
-
+        double a = 3/0;
         return userService.listByName(queryVo);
     }
 
