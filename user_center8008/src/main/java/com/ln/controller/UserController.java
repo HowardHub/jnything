@@ -10,10 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,6 +44,15 @@ public class UserController{
             return userService.listByName(queryVo);
         }
 
+    }
+
+
+    @ApiOperation("事务验证")
+    @GetMapping("/transaction/check")
+    private String transactionCheck(){
+        userService.updateUserById1();
+        userService.updateUserById2();
+        return "OK";
     }
 
 

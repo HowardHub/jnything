@@ -17,4 +17,11 @@ public interface IUserService extends IService<User> {
 
     List<UserVo> listByName(UserQueryVo queryVo);
 
+
+    // ---------------验证事务
+    Void updateUserById1();
+
+    Void updateUserById2();
+    // ---------------验证事务
+
 }
